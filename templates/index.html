@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Money Meow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #FFF5E1; min-height: 100vh; padding: 32px 20px; display: flex; flex-direction: column; align-items: center; font-family: 'Nunito', sans-serif; }
+        .checker-bar { width: 100%; max-width: 600px; height: 18px; background: repeating-linear-gradient(90deg, #E84393 0 18px, #FFD93D 18px 36px); border-radius: 6px; margin-bottom: 24px; }
+        .header { text-align: center; margin-bottom: 28px; }
+        .mascot { font-size: 64px; display: block; margin-bottom: 4px; }
+        .title { font-family: 'Boogaloo', cursive; font-size: 2.8rem; color: #1A3EBF; text-shadow: 4px 4px 0 #FFD93D; letter-spacing: 1px; margin: 0; }
+        .subtitle { font-size: 1rem; color: #E84393; font-weight: 700; margin-top: 6px; }
+        .card { background: white; border: 3px solid #1A3EBF; border-radius: 20px; padding: 32px; width: 100%; max-width: 520px; box-shadow: 6px 6px 0 #1A3EBF; margin-bottom: 32px; }
+        .upload-box { border: 3px dashed #E84393; border-radius: 14px; padding: 36px 20px; text-align: center; cursor: pointer; background: #FFF0F7; margin-bottom: 20px; transition: background 0.2s; }
+        .upload-box:hover { background: #FFE0F0; }
+        .upload-icon { font-size: 2.4rem; display: block; margin-bottom: 8px; }
+        .upload-box span { color: #E84393; font-weight: 900; font-size: 1rem; display: block; }
+        .upload-box small { color: #aaa; font-size: 0.82rem; }
+        .file-name { color: #1A3EBF; font-weight: 700; font-size: 0.9rem; min-height: 20px; text-align: center; margin-bottom: 12px; }
+        .btn { background: #E84393; color: white; border: 3px solid #1A3EBF; padding: 14px; border-radius: 12px; font-size: 1.1rem; font-weight: 900; width: 100%; cursor: pointer; font-family: 'Boogaloo', cursive; letter-spacing: 1px; box-shadow: 4px 4px 0 #1A3EBF; transition: transform 0.1s; }
+        .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #1A3EBF; }
+        .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #1A3EBF; }
+        .result-card { background: white; border: 3px solid #1A3EBF; border-radius: 20px; padding: 28px; width: 100%; max-width: 560px; box-shadow: 6px 6px 0 #FFD93D; text-align: center; }
+        .result-title { font-family: 'Boogaloo', cursive; font-size: 1.8rem; color: #1A3EBF; margin-bottom: 16px; }
+        .result-card img { width: 100%; border-radius: 10px; border: 2px solid #eee; }
+        .stars { color: #FFD93D; font-size: 1.2rem; letter-spacing: 4px; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="checker-bar"></div>
+
+    <div class="header">
+        <span class="mascot">🐱</span>
+        <h1 class="title">Money Meow</h1>
+        <p class="subtitle">✦ upload ur CSV & see where ur money goes ✦</p>
+    </div>
+
+    <div class="card">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="upload-box" onclick="document.getElementById('file-input').click()">
+                <span class="upload-icon">📂</span>
+                <span>Click to choose a CSV or excel file</span>
+                <small>only .csv and .xlsx files supported</small>
+            </div>
+            <input type="file" id="file-input" name="file" accept=".csv,.xlsx,.xls" style="display:none"
+            onchange="document.getElementById('fname').textContent = this.files[0].name">
+            <div class="file-name" id="fname"></div>
+            <button class="btn" type="submit">Analyze My Spending ✦</button>
+        </form>
+    </div>
+
+    {% if chart %}
+    <div class="result-card">
+        <div class="stars">★ ★ ★ ★ ★</div>
+        <div class="result-title">📊 Your Spending Breakdown</div>
+        <img src="data:image/png;base64,{{ chart }}">
+    </div>
+    {% endif %}
+
+    <div class="checker-bar" style="margin-top: 28px;"></div>
+</body>
+</html>
