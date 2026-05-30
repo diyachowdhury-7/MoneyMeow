@@ -9,7 +9,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
-
+#newline
 @app.route("/")
 def home():
     return render_template("index.html")
